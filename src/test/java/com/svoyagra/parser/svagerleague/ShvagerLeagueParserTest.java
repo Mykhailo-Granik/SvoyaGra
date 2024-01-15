@@ -1,5 +1,6 @@
 package com.svoyagra.parser.svagerleague;
 
+import com.svoyagra.tools.sheets.excel.ExcelSheetsTools;
 import com.svoyagra.tools.sheets.excel.workbook.provider.WorkbookProviderImpl;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.jupiter.api.Test;
@@ -24,11 +25,11 @@ public class ShvagerLeagueParserTest {
     public void shouldParseTournament() {
         when(workbookProvider.provide()).thenReturn(workbook);
         when(workbook.getNumberOfSheets()).thenReturn(NUMBER_OF_ROUNDS);
-        when(workbook.getSheetAt(0)).thenReturn(null);
-        ShvagerLeagueParser parser = new ShvagerLeagueParser("Tournament", workbookProvider, roundParser);
+        ShvagerLeagueParser parser =
+                new ShvagerLeagueParser("Tournament", new ExcelSheetsTools(workbookProvider), roundParser);
         parser.parse();
         verify(workbookProvider).provide();
-        verify(roundParser, times(NUMBER_OF_ROUNDS)).parse(any());
+        verify(roundParser, times(NUMBER_OF_ROUNDS)).parse(anyInt());
     }
 
 }
