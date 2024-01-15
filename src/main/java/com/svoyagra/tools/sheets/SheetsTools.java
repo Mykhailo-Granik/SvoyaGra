@@ -1,7 +1,9 @@
 package com.svoyagra.tools.sheets;
 
-public interface SheetTools {
+public interface SheetsTools {
 
     String textValueOfCell(CellParameters cellParameters);
+
+    int numberOfSheets();
 
 }

@@ -9,14 +9,14 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ExcelSheetToolsTest {
+public class ExcelSheetsToolsTest {
 
     public static final String TEXT = "text";
     @Mock
@@ -26,7 +26,7 @@ public class ExcelSheetToolsTest {
     public void shouldReturnTextValueOfCell() {
         CellParameters cellParameters = new CellParameters(0, 0, 0);
         prepareCell(cellParameters);
-        ExcelSheetTools excelSheetTools = new ExcelSheetTools(workbookProvider);
+        ExcelSheetsTools excelSheetTools = new ExcelSheetsTools(workbookProvider);
         assertEquals(TEXT,
                 excelSheetTools.textValueOfCell(cellParameters)
         );
@@ -44,6 +44,16 @@ public class ExcelSheetToolsTest {
         when(cell.getStringCellValue()).thenReturn(TEXT);
         when(row.getCell(cellParameters.getColumnIndex()))
                 .thenReturn(cell);
+    }
+
+    @Test
+    public void shouldReturnNumberOfSheets() {
+        Workbook workbook = mock(Workbook.class);
+        when(workbookProvider.provide()).thenReturn(workbook);
+        int numberOfSheets = 5;
+        when(workbook.getNumberOfSheets()).thenReturn(numberOfSheets);
+        ExcelSheetsTools excelSheetTools = new ExcelSheetsTools(workbookProvider);
+        assertEquals(numberOfSheets, excelSheetTools.numberOfSheets());
     }
 
 }
