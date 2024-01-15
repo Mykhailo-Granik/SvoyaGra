@@ -2,12 +2,8 @@ package com.svoyagra.parser.svagerleague;
 
 import com.svoyagra.data.PlayerRepository;
 import com.svoyagra.domain.Player;
-import com.svoyagra.tools.sheets.excel.ExcelSheetsDocument;
-import com.svoyagra.tools.sheets.excel.workbook.provider.WorkbookProviderImpl;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import com.svoyagra.tools.sheets.CellParameters;
+import com.svoyagra.tools.sheets.SheetsDocument;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -20,36 +16,39 @@ import static org.mockito.Mockito.when;
 class ShvagerLeaguePlayersParserTest {
 
     @Mock
-    private WorkbookProviderImpl workbookProvider;
-    @Mock
     private PlayerRepository playerRepository;
     @Mock
-    private Workbook workbook;
-    @Mock
-    private Sheet sheet;
-    @Mock
-    private Row row;
-    @Mock
-    private Cell nameCell;
-    @Mock
-    private Cell cityCell;
+    private SheetsDocument sheetsDocument;
 
     @Test
     public void shouldUpsertOnePlayer() {
-        when(workbookProvider.provide()).thenReturn(workbook);
-        when(workbook.getNumberOfSheets()).thenReturn(1);
-        when(workbook.getSheetAt(0)).thenReturn(sheet);
-        when(sheet.getRow(1)).thenReturn(row);
-        when(row.getCell(1)).thenReturn(nameCell);
-        when(nameCell.getStringCellValue()).thenReturn("Михайло Гранік");
-        when(row.getCell(2)).thenReturn(cityCell);
-        when(cityCell.getStringCellValue()).thenReturn("Вінниця");
+        when(sheetsDocument.numberOfSheets()).thenReturn(1);
+        when(sheetsDocument.textValueOfCell(new CellParameters(0, 1, 1))).thenReturn("Михайло Гранік");
+        when(sheetsDocument.textValueOfCell(new CellParameters(0, 1, 2))).thenReturn("Вінниця");
+        when(sheetsDocument.textValueOfCell(new CellParameters(0, 2, 1))).thenReturn("");
         ShvagerLeaguePlayersParser underTest = new ShvagerLeaguePlayersParser(
                 playerRepository,
-                new ExcelSheetsDocument(workbookProvider)
+                sheetsDocument
         );
         underTest.upsertPlayers();
         verify(playerRepository).upsert(new Player("Михайло", "Гранік", "Вінниця"));
+    }
+
+    @Test
+    public void shouldUpsertMultiplePlayers() {
+        when(sheetsDocument.numberOfSheets()).thenReturn(1);
+        when(sheetsDocument.textValueOfCell(new CellParameters(0, 1, 1))).thenReturn("Михайло Гранік");
+        when(sheetsDocument.textValueOfCell(new CellParameters(0, 1, 2))).thenReturn("Вінниця");
+        when(sheetsDocument.textValueOfCell(new CellParameters(0, 2, 1))).thenReturn("Іван Іванов");
+        when(sheetsDocument.textValueOfCell(new CellParameters(0, 2, 2))).thenReturn("Київ");
+        when(sheetsDocument.textValueOfCell(new CellParameters(0, 3, 1))).thenReturn("");
+        ShvagerLeaguePlayersParser underTest = new ShvagerLeaguePlayersParser(
+                playerRepository,
+                sheetsDocument
+        );
+        underTest.upsertPlayers();
+        verify(playerRepository).upsert(new Player("Михайло", "Гранік", "Вінниця"));
+        verify(playerRepository).upsert(new Player("Іван", "Іванов", "Київ"));
     }
 
 }

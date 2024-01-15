@@ -18,10 +18,22 @@ public class ShvagerLeaguePlayersParser implements TournamentPlayersParser {
     @Override
     public void upsertPlayers() {
         for (int sheetIndex = 0; sheetIndex < sheetsDocument.numberOfSheets(); sheetIndex++) {
-            String name = name(sheetIndex, 1);
-            String city = city(sheetIndex, 1);
-            playerRepository.upsert(new Player(firstName(name), lastName(name), city));
+            upsertPlayersFromSheet(sheetIndex);
         }
+    }
+
+    private void upsertPlayersFromSheet(int sheetIndex) {
+        int playerIndex = 1;
+        while (hasPlayer(sheetIndex, playerIndex)) {
+            String name = name(sheetIndex, playerIndex);
+            String city = city(sheetIndex, playerIndex);
+            playerRepository.upsert(new Player(firstName(name), lastName(name), city));
+            playerIndex++;
+        }
+    }
+
+    private boolean hasPlayer(int sheetIndex, int playerIndex) {
+        return !name(sheetIndex, playerIndex).isEmpty();
     }
 
     private String name(int sheetIndex, int playerIndex) {
