@@ -4,6 +4,6 @@ import com.svoyagra.domain.Player;
 
 public interface PlayerRepository {
 
-    void save(Player player);
+    void upsert(Player player);
 
 }

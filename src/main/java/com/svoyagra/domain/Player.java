@@ -16,6 +16,10 @@ public class Player {
         this.city = city;
     }
 
+    public Player(String firstName, String lastName, String city) {
+        this(null, firstName, lastName, city);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -27,5 +31,15 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(firstName, lastName, city, id);
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", city='" + city + '\'' +
+                '}';
     }
 }
