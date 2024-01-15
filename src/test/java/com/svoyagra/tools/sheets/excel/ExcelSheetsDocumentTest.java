@@ -16,7 +16,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ExcelSheetsToolsTest {
+public class ExcelSheetsDocumentTest {
 
     public static final String TEXT = "text";
     @Mock
@@ -26,7 +26,7 @@ public class ExcelSheetsToolsTest {
     public void shouldReturnTextValueOfCell() {
         CellParameters cellParameters = new CellParameters(0, 0, 0);
         prepareCell(cellParameters);
-        ExcelSheetsTools excelSheetTools = new ExcelSheetsTools(workbookProvider);
+        ExcelSheetsDocument excelSheetTools = new ExcelSheetsDocument(workbookProvider);
         assertEquals(TEXT,
                 excelSheetTools.textValueOfCell(cellParameters)
         );
@@ -52,7 +52,7 @@ public class ExcelSheetsToolsTest {
         when(workbookProvider.provide()).thenReturn(workbook);
         int numberOfSheets = 5;
         when(workbook.getNumberOfSheets()).thenReturn(numberOfSheets);
-        ExcelSheetsTools excelSheetTools = new ExcelSheetsTools(workbookProvider);
+        ExcelSheetsDocument excelSheetTools = new ExcelSheetsDocument(workbookProvider);
         assertEquals(numberOfSheets, excelSheetTools.numberOfSheets());
     }
 

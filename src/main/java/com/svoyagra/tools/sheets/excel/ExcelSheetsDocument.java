@@ -1,14 +1,14 @@
 package com.svoyagra.tools.sheets.excel;
 
 import com.svoyagra.tools.sheets.CellParameters;
-import com.svoyagra.tools.sheets.SheetsTools;
+import com.svoyagra.tools.sheets.SheetsDocument;
 import com.svoyagra.tools.sheets.excel.workbook.provider.WorkbookProvider;
 import org.apache.poi.ss.usermodel.Workbook;
 
-public class ExcelSheetsTools implements SheetsTools {
+public class ExcelSheetsDocument implements SheetsDocument {
     private final Workbook workbook;
 
-    public ExcelSheetsTools(WorkbookProvider workbookProvider) {
+    public ExcelSheetsDocument(WorkbookProvider workbookProvider) {
         this.workbook = workbookProvider.provide();
     }
 

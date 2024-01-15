@@ -2,7 +2,7 @@ package com.svoyagra.parser.svagerleague;
 
 import com.svoyagra.data.PlayerRepository;
 import com.svoyagra.domain.Player;
-import com.svoyagra.tools.sheets.excel.ExcelSheetsTools;
+import com.svoyagra.tools.sheets.excel.ExcelSheetsDocument;
 import com.svoyagra.tools.sheets.excel.workbook.provider.WorkbookProviderImpl;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -46,7 +46,7 @@ class ShvagerLeaguePlayersParserTest {
         when(cityCell.getStringCellValue()).thenReturn("Вінниця");
         ShvagerLeaguePlayersParser underTest = new ShvagerLeaguePlayersParser(
                 playerRepository,
-                new ExcelSheetsTools(workbookProvider)
+                new ExcelSheetsDocument(workbookProvider)
         );
         underTest.upsertPlayers();
         verify(playerRepository).upsert(new Player("Михайло", "Гранік", "Вінниця"));

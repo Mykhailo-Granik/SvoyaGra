@@ -4,7 +4,7 @@ import com.svoyagra.data.PlayerRepository;
 import com.svoyagra.domain.Player;
 import com.svoyagra.parser.TournamentPlayersParser;
 import com.svoyagra.tools.sheets.CellParameters;
-import com.svoyagra.tools.sheets.SheetsTools;
+import com.svoyagra.tools.sheets.SheetsDocument;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -13,11 +13,11 @@ public class ShvagerLeaguePlayersParser implements TournamentPlayersParser {
     public static final int NAMES_COLUMN = 1;
     public static final int CITY_COLUMN = 2;
     private final PlayerRepository playerRepository;
-    private final SheetsTools sheetsTools;
+    private final SheetsDocument sheetsDocument;
 
     @Override
     public void upsertPlayers() {
-        for (int sheetIndex = 0; sheetIndex < sheetsTools.numberOfSheets(); sheetIndex++) {
+        for (int sheetIndex = 0; sheetIndex < sheetsDocument.numberOfSheets(); sheetIndex++) {
             String name = name(sheetIndex, 1);
             String city = city(sheetIndex, 1);
             playerRepository.upsert(new Player(firstName(name), lastName(name), city));
@@ -25,13 +25,13 @@ public class ShvagerLeaguePlayersParser implements TournamentPlayersParser {
     }
 
     private String name(int sheetIndex, int playerIndex) {
-        return sheetsTools.textValueOfCell(
+        return sheetsDocument.textValueOfCell(
                 new CellParameters(sheetIndex, playerIndex, NAMES_COLUMN)
         );
     }
 
     private String city(int sheetIndex, int playerIndex) {
-        return sheetsTools.textValueOfCell(
+        return sheetsDocument.textValueOfCell(
                 new CellParameters(sheetIndex, playerIndex, CITY_COLUMN)
         );
     }

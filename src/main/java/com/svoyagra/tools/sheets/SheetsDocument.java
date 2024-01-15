@@ -1,6 +1,6 @@
 package com.svoyagra.tools.sheets;
 
-public interface SheetsTools {
+public interface SheetsDocument {
 
     String textValueOfCell(CellParameters cellParameters);
 
