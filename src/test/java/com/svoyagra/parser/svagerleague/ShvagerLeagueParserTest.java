@@ -1,13 +1,12 @@
 package com.svoyagra.parser.svagerleague;
 
+import com.svoyagra.tools.sheets.excel.workbook.provider.WorkbookProviderImpl;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -15,7 +14,7 @@ public class ShvagerLeagueParserTest {
 
     public static final int NUMBER_OF_ROUNDS = 3;
     @Mock
-    private ShvagerLeagueWorkbookProvider workbookProvider;
+    private WorkbookProviderImpl workbookProvider;
     @Mock
     private ShvagerLeagueRoundParser roundParser;
     @Mock

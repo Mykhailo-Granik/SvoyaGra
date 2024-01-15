@@ -2,6 +2,7 @@ package com.svoyagra.parser.svagerleague;
 
 import com.svoyagra.domain.Tournament;
 import com.svoyagra.parser.TournamentParser;
+import com.svoyagra.tools.sheets.excel.workbook.provider.WorkbookProviderImpl;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import java.io.IOException;
@@ -9,10 +10,10 @@ import java.io.IOException;
 public class ShvagerLeagueParser implements TournamentParser {
 
     private final String tournamentName;
-    private final ShvagerLeagueWorkbookProvider workbookProvider;
+    private final WorkbookProviderImpl workbookProvider;
     private final ShvagerLeagueRoundParser roundParser;
 
-    public ShvagerLeagueParser(String tournamentName, ShvagerLeagueWorkbookProvider workbookProvider, ShvagerLeagueRoundParser roundParser) {
+    public ShvagerLeagueParser(String tournamentName, WorkbookProviderImpl workbookProvider, ShvagerLeagueRoundParser roundParser) {
         this.tournamentName = tournamentName;
         this.workbookProvider = workbookProvider;
         this.roundParser = roundParser;

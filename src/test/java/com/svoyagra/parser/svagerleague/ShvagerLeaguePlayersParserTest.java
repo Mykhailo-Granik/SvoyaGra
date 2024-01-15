@@ -2,6 +2,7 @@ package com.svoyagra.parser.svagerleague;
 
 import com.svoyagra.data.PlayerRepository;
 import com.svoyagra.domain.Player;
+import com.svoyagra.tools.sheets.excel.workbook.provider.WorkbookProviderImpl;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -18,7 +19,7 @@ import static org.mockito.Mockito.when;
 class ShvagerLeaguePlayersParserTest {
 
     @Mock
-    private ShvagerLeagueWorkbookProvider workbookProvider;
+    private WorkbookProviderImpl workbookProvider;
     @Mock
     private PlayerRepository playerRepository;
     @Mock

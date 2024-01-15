@@ -3,6 +3,7 @@ package com.svoyagra.parser.svagerleague;
 import com.svoyagra.data.PlayerRepository;
 import com.svoyagra.domain.Player;
 import com.svoyagra.parser.TournamentPlayersParser;
+import com.svoyagra.tools.sheets.excel.workbook.provider.WorkbookProviderImpl;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -12,10 +13,10 @@ public class ShvagerLeaguePlayersParser implements TournamentPlayersParser {
 
     public static final int NAMES_COLUMN = 1;
     public static final int CITY_COLUMN = 2;
-    private final ShvagerLeagueWorkbookProvider workbookProvider;
+    private final WorkbookProviderImpl workbookProvider;
     private final PlayerRepository playerRepository;
 
-    public ShvagerLeaguePlayersParser(ShvagerLeagueWorkbookProvider workbookProvider, PlayerRepository playerRepository) {
+    public ShvagerLeaguePlayersParser(WorkbookProviderImpl workbookProvider, PlayerRepository playerRepository) {
         this.workbookProvider = workbookProvider;
         this.playerRepository = playerRepository;
     }
