@@ -7,19 +7,29 @@ import com.svoyagra.tools.sheets.CellParameters;
 import com.svoyagra.tools.sheets.SheetsDocument;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
+import static java.util.stream.IntStream.range;
+
 @RequiredArgsConstructor
 public class ShvagerLeaguePlayersParser implements TournamentPlayersParser {
 
     public static final int NAMES_COLUMN = 1;
     public static final int CITY_COLUMN = 2;
+    public static final String LEAGUE = "Ліга";
     private final PlayerRepository playerRepository;
     private final SheetsDocument sheetsDocument;
 
     @Override
     public void upsertPlayers() {
-        for (int sheetIndex = 0; sheetIndex < sheetsDocument.numberOfSheets(); sheetIndex++) {
-            upsertPlayersFromSheet(sheetIndex);
-        }
+        List<String> sheetNames = sheetsDocument.sheetNamesInOrder();
+        range(0, sheetNames.size())
+                .filter(sheetIndex -> isLeagueSheet(sheetNames, sheetIndex))
+                .forEach(this::upsertPlayersFromSheet);
+    }
+
+    private boolean isLeagueSheet(List<String> sheetNames, int sheetIndex) {
+        return sheetNames.get(sheetIndex).startsWith(LEAGUE);
     }
 
     private void upsertPlayersFromSheet(int sheetIndex) {
