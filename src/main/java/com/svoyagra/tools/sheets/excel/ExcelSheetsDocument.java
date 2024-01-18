@@ -5,6 +5,11 @@ import com.svoyagra.tools.sheets.SheetsDocument;
 import com.svoyagra.tools.sheets.excel.workbook.provider.WorkbookProvider;
 import org.apache.poi.ss.usermodel.Workbook;
 
+import java.util.List;
+import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.toList;
+
 public class ExcelSheetsDocument implements SheetsDocument {
     private final Workbook workbook;
 
@@ -23,5 +28,12 @@ public class ExcelSheetsDocument implements SheetsDocument {
     @Override
     public int numberOfSheets() {
         return workbook.getNumberOfSheets();
+    }
+
+    @Override
+    public List<String> sheetNamesInOrder() {
+        return IntStream.range(0, workbook.getNumberOfSheets())
+                .mapToObj(workbook::getSheetName)
+                .collect(toList());
     }
 }
